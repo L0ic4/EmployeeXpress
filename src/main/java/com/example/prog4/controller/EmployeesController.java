@@ -2,6 +2,7 @@ package com.example.prog4.controller;
 
 import com.example.prog4.controller.Data.InputData.EmployeeInput;
 import com.example.prog4.controller.Mapper.EmployeeMapper;
+import com.example.prog4.controller.params.pdfParams;
 import com.example.prog4.entity.Employee.EmployeeEntity;
 import com.example.prog4.service.CsvService;
 import com.example.prog4.service.EmployeeService;
@@ -89,10 +90,13 @@ public class EmployeesController {
     return "employee-card";
   }
 
-  @GetMapping(value = "/{id}/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-  public ResponseEntity<byte[]> getEmployeePdfAndRedirect(@PathVariable int id)
+  @GetMapping(value = "/{id}/pdf/{params}", produces = MediaType.APPLICATION_PDF_VALUE)
+  public ResponseEntity<byte[]> getEmployeePdfAndRedirect(
+      @PathVariable int id,
+      @PathVariable pdfParams params
+  )
       throws DocumentException {
-    byte[] pdfCardAsBytes = pdfService.getPdf(id);
+    byte[] pdfCardAsBytes = pdfService.getPdf(id,params);
 
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_PDF);
